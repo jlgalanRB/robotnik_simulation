@@ -127,7 +127,7 @@ def launch_setup(context, params):
         ]),
         launch_arguments={
             'verbose': 'false',
-            'robot_xacro_file': params['robot_xacro'],
+            'robot_xacro_path': params['robot_xacro'],
             'frame_prefix': [params['robot_id'], '_'],
             'namespace': params['robot_id'],
             'gazebo_ignition': 'true',
@@ -247,7 +247,7 @@ def launch_setup(context, params):
     new_controllers = extract_controllers_from_yaml(path)
 
     # ROS2 control
-    controllers = ['joint_state_broadcaster']
+    controllers =  ['--controller-manager-timeout', '60', '--service-call-timeout', '60', 'joint_state_broadcaster']
     # Replace default joint_state_broadcaster by the one defined in the specific
     # ros2_control.yamlrobot model
     if 'joint_state_broadcaster' in new_controllers:
