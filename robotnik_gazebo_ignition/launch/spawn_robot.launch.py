@@ -338,7 +338,8 @@ def launch_setup(context, params):
                 f'/{robot_id}/map',
                 '--qos-durability', 'transient_local'
             ],
-            output='screen'
+            output='screen',
+            condition=IfCondition(params['run_nav2'])
         )
     )
     
@@ -407,6 +408,7 @@ def launch_setup(context, params):
                 ('cloud_in', 'top_laser/points'),
                 ('scan', 'front_laser/scan'),
             ],
+            condition=IfCondition(params['run_pointcloud_to_laserscan'])
         )
     )
 
@@ -428,6 +430,7 @@ def generate_launch_description():
         ("use_sim_time", "Use simulation time", "True", "USE_SIM_TIME"),
         ("low_performance_simulation", "Enable Low Performance Simulation", "False", "LOW_PERFORMANCE_SIMULATION"),
         ("run_nav2", "Run Nav2 stack", "False", "RUN_NAV2"),
+        ("run_pointcloud_to_laserscan", "Run PointCloud2 to LaserScan conversion", "False", "RUN_POINTCLOUD_TO_LASERSCAN"),
         ("slam", "Run SLAM (true) or localization (false)", "False", "SLAM"),
         ("nav2_params", "Nav2 params file",
          [FindPackageShare('robotnik_gazebo_ignition'), '/config/nav2/nav2_params.yaml'],
